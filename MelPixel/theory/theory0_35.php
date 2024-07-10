@@ -216,5 +216,490 @@ class User
 	
 	// Проверим, что имя изменилось:
 	echo $user->name; // выведет 'eric'
+
+
+	// Обращение к методам класса через $this
+	// Метод для изменения возраста юзера:
+	public function setAge($age)
+	{
+		$this->age = $age;
+	}
+
+
+	// Пусть также нам нужен метод addAge, который будет добавлять некоторое количество лет к текущему возрасту:
+	// Метод для добавления к возрасту:
+	public function addAge($years)
+	{
+		$this->age = $this->age + $years;
+	}
+
+	// Метод для добавления к возрасту:
+	public function addAge($years)
+	{
+		$newAge = $this->age + $years; // вычислим новый возраст 
+		
+		// Если НОВЫЙ возраст от 18 до 60:
+		if ($newAge >= 18 and $newAge <= 60) { 
+			$this->age = $newAge; 
+				// обновим, если новый возраст прошел проверку 
+		}
+	}
+
+
+
+// 	Получится, что ограничения на возраст теперь задаются в двух местах (в методе setAge и в методе addAge), что не очень хорошо: если мы захотим поменять ограничение, нам придется сделать это в двух местах - это неудобно, и в каком-то из мест мы можем забыть внести изменения - это опасно, ведь наш код получится с трудноуловимой ошибкой.
+
+// Давайте вынесем проверку возраста на корректность в отдельный вспомогательный метод isAgeCorrect, в который параметром будет передаваться возраст для проверки, и используем его внутри методов setAge и addAg
+	// Метод для проверки возраста:
+	public function isAgeCorrect($age)
+	{
+		if ($age >= 18 and $age <= 60) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+		// Метод для изменения возраста юзера:
+		public function setAge($age)
+		{
+			// Проверим возраст на корректность:
+			if ($this->isAgeCorrect($age)) {
+				$this->age = $age;
+			}
+		}
+		
+		// Метод для добавления к возрасту:
+		public function addAge($years)
+		{
+			$newAge = $this->age + $years; // вычислим новый возраст 
+			
+			// Проверим возраст на корректность:
+			if ($this->isAgeCorrect($newAge)) {
+				$this->age = $newAge; 
+					// обновим, если новый возраст прошел проверку 
+			}
+		}
+
+		$user->setAge(30); // установим возраст в 30 
+		echo $user->age; // выведет 30
+		
+		$user->setAge(10); // установим некорректный возраст 
+		echo $user->age; // не выведет 10, а выведет 30 
+
+
+
+	// Модификаторы доступа public и private в PHP
+	// Методы и свойства, которые мы хотим сделать недоступными извне, называются приватными и объявляются с помощью ключевого слова private.
+		// Выдаст ошибку, так как свойство 
+		name - private: 
+		$user->name = 'john';
+
+	// Как мы знаем, метод isAgeCorrect является вспомогательным и мы не планируем использовать его снаружи класса. Логично сделать его приватным,
+	// Обычно все приватные методы размещают в конце класса,
+// 	Существует специальное правило: если вы делаете новый метод и не знаете, сделать его публичным или приватным, - делайте приватным. В дальнейшем, если он понадобится снаружи, - вы поменяете его на публичный.
+
+// Еще раз резюмируем: слова public и private не нужны для реализации логики программы, а нужны для того, чтобы уберечь программистов от ошибок.
+
+
+
+// Конструктор объекта в ООП на PHP
+$user = new User('john', 25); // создадим объект, сразу заполнив его данными 
+// Для решения проблемы нам поможет метод конструктор с названием __construct. Суть в следующем - если в коде класса существует метод с таким названием - он будет вызываться в момент создания объекта:
+public function __construct()
+		{
+			echo '!!!';
+		}
+	}
+	
+	$user = new User; // выведет '!!!'
+
+
+	// Конструктор объекта:
+	public function __construct($name, $age) 
+{
+	$this->name = $name; 
+		// запишем данные в свойство  name 
+	$this->age = $age; 
+		// запишем данные в свойство age 
+}
+
+
+// Работа с геттерами и сеттерами в ООП на PHP
+// Метод для чтения возраста юзера:
+	public function getAge()
+	{
+		return $this->age;
+	}
+
+	public function setAge($age)
+	{
+		if ($this->isAgeCorrect($age)) {
+			$this->age = $age;
+		}
+	}
+
+	// ользовать тогда, когда нам нужна какая-то проверка в сеттере. В терминах этого подхода метод getAge называется геттером (англ. getter), а метод setAge - сеттером (англ. setter).
+
+
+
+	// Свойства только для чтения в ООП на PHP
+	// Это делается следующим образом: для такого свойства нужно сделать геттер, но не делать сеттер. В этом случае свойство можно будет прочитать с помощью геттера, но нельзя будет записать, так как сеттер отсутствует. 
+	// Геттер для имени:
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	// Конструктор объекта:
+	public function __construct($name, 
+	$age) 
+{
+	$this->name = $name;
+	$this->age = $age;
+}
+
+
+// Хранение классов в отдельных файлах в PHP
+// До этого урока мы писали наши классы в том же файле, где и вызывали их. В реальной жизни классы обычно хранятся в отдельных файлах, причем каждый класс в своем отдельном файле. При этом существует соглашение о том, что файл с классом следует называть так же, как и сам класс.
+require_once 'User.php'; // подключаем наш класс 
+	$user = new User;
+
+
+	// Хранение объектов в массивах в ООП на PHР
+	// ом мы создаем наш массив с объектами - важен сам принцип: объекты можно хранить в массивах. Затем эти объекты можно, к примеру, перебрать циклом. Давайте сделаем это:
+	$users = [
+		new User('john', 21),
+		new User('eric', 22),
+		new User('kyle', 23)
+	];
+	// Переберем созданный массив циклом:
+	foreach ($users as $user) {
+		echo $user->name . ' ' . $user->age . '<br>'; 
+	}
+
+
+	// Начальные значения свойств в конструкторе
+	public function __construct()
+	{
+		$this->prop1 = 'value1'; 
+			// начальное значение свойства 
+		$this->prop2 = 'value2'; 
+			// начальное значение свойства 
+	}
+	$test = new Test;
+	echo $test->prop1; // выведет 'value1' 
+	echo $test->prop2; // выведет 'value2' 
+
+
+
+	// Начальные значения свойств при объявлении
+	public $prop1 = 'value1'; 
+	// начальное значение свойства prop1 
+	public $prop2 = 'value2'; 
+	// начальное значение свойства prop2 
+
+
+	class Arr
+	{
+		// Массив для хранения чисел:
+		private $numbers = [];
+		
+		// Добавляет число в набор:
+		public function add($num)
+		{
+			$this->numbers[] = $num;
+		}
+		
+		// Находит сумму чисел набора:
+		public function getSum()
+		{
+			return array_sum($this->numbers);
+		}
+	}
+
+	$arr = new Arr;
+	$arr->add(1);
+	$arr->add(2);
+	$arr->add(3);
+	echo $arr->getSum(); // выведет 6
+
+
+	// Переменные названия свойств объектов в PHP
+	$user = new User('john', 21);
+	$prop = 'name';
+	echo $user->$prop; // выведет 'john' 
+
+	class User
+	{
+		public $surname; // фамилия
+		public $name; // имя
+		public $patronymic; // отчество
+		
+		public function __construct($surname, 
+			$name, $patronymic) 
+		{
+			$this->surname = $surname;
+			$this->name = $name;
+			$this->patronymic = $patronymic;
+		}
+	}
+	$props = ['surname', 'name', 'patronymic']; 
+	$user = new User('Иванов', 'Иван', 'Иванович'); 
+	echo $user->{$props[0]}; // выведет 'Иванов' 
+
+	$user = new User('Иванов', 'Иван', 'Иванович'); 
+	$props = ['prop1' => 'surname', 'prop2' => 'name', 'prop3' => 'patronymic']; 
+	echo $user->{$props['prop1']}; // выведет 'Иванов' 
+
+
+
+	class Prop
+	{
+		public $value;
+		public function __construct($value)
+		{
+			$this->value = $value;
+		}
+	}
+	$user = new User('Иванов', 'Иван', 'Иванович'); 
+	$prop = new Prop('surname'); // будем выводить значение свойства surname 
+	echo $user->{$prop->value}; // выведет 'Иванов' 
+
+
+	// Переменные названия методов
+	$user = new User('john', 21);
+	$method = 'getName';
+	echo $user->$method(); // выведет 'john' 
+
+
+	$user = new User('john', 21);
+	$methods = ['getName', 'getAge'];
+	echo $user->{$methods[0]}(); // выведет 'john' 
+
+
+	// Вызов метода сразу после создания объекта
+	$arr = new Arr([1, 2, 3]);
+	echo $arr->getSum(); // выведет 6
+	
+	echo (new Arr([1, 2, 3]))->getSum(); // выведет 6 
+
+	echo (new Arr([1, 2, 3]))->getSum() + (new Arr([4, 5, 6])->getSum(); 
+
+
+	// Цепочки методов
+	echo $arr->add(1)->add(2)->push([3, 4])->getSum(); // это наша цель 
+
+	echo (new Arr)->add(1)->add(2)->push([3, 4])->getSum(); // выведет 10 
+
+
+	// Класс как набор методов в ООП на PHP
+	$arraySumHelper = new ArraySumHelper;
+	$arr = [1, 2, 3];
+	echo $arraySumHelper->getSum1($arr);
+	echo $arraySumHelper->getSum2($arr);
+	echo $arraySumHelper->getSum3($arr);
+	echo $arraySumHelper->getSum4($arr);
+
+	$arraySumHelper = new ArraySumHelper;
+	$arr = [1, 2, 3];
+	echo $arraySumHelper->getSum2($arr) + $arraySumHelper->getSum3($arr); 
+
+	class ArraySumHelper
+	{
+		public function getSum1($arr)
+		{
+			$sum = 0;
+			
+			foreach ($arr as $elem) {
+				$sum += $elem; // первая 
+					степень элемента - это сам 
+					элемент 
+			}
+			
+			return $sum;
+		}
+		
+		public function getSum2($arr)
+		{
+			$sum = 0;
+			
+			foreach ($arr as $elem) {
+				$sum += pow($elem, 
+					2); // возведем во вторую 
+					степень 
+			}
+			
+			return $sum;
+		}
+		
+		public function getSum3($arr)
+		{
+			$sum = 0;
+			
+			foreach ($arr as $elem) {
+				$sum += pow($elem, 
+					3); // возведем в третью 
+					степень 
+			}
+			
+			return $sum;
+		}
+		
+		public function getSum4($arr)
+		{
+			$sum = 0;
+			
+			foreach ($arr as $elem) {
+				$sum += pow($elem, 
+					4); // возведем в четвертую 
+					степень 
+			}
+			
+			return $sum;
+		}
+	}
+
+
+
+	private function getSum($arr, $power) {
+		$sum = 0;
+		foreach ($arr as $elem) {
+			$sum += pow($elem, $power);
+		}
+		return $sum;
+	}
+
+
+	class ArraySumHelper
+	{
+		public function getSum1($arr)
+		{
+			return $this->getSum($arr, 1);
+		}
+		
+		public function getSum2($arr)
+		{
+			return $this->getSum($arr, 2);
+		}
+		
+		public function getSum3($arr)
+		{
+			return $this->getSum($arr, 3);
+		}
+		
+		public function getSum4($arr)
+		{
+			return $this->getSum($arr, 4);
+		}
+		
+		private function getSum($arr, $power) {
+			$sum = 0;
+			
+			foreach ($arr as $elem) {
+				$sum += pow($elem, $power);
+			}
+			return $sum;
+		}
+	}
+
+	// Наследование классов
+
+	// Класс, от которого наследуют называется родителем (англ. parent), а класс, который наследует - потомком. Класс-потомок наследует только публичные методы и свойства, но не приватные.
+
+	// Наследование реализуется с помощью ключевого слова extends
+	class Employee extends User
+	{
+		private $salary;
+		
+		public function getSalary()
+		{
+			return $this->salary;
+		}
+		
+		public function setSalary($salary)
+		{
+			$this->salary = $salary;
+		}
+		
+	}
+
+	// Наследование от наследников
+	// Пусть у нас есть класс-родитель и класс-потомок. От этого потомка также могут наследовать другие классы, от его потомков другие и так далее. Для примера пусть от класса User наследует Student, а от него в свою очередь наследует класс StudentBSU:
+	class StudentBSU extends Student
+	{
+		// добавляем свои свойства и методы 
+	}
+
+
+	// Модификатор доступа protected в ООП на PHP
+	// Другими словами, мы хотели бы, чтобы некоторые методы или свойства родителя наследовались потомками, но при этом для всего остального мира вели себя как приватные.
+	// Для решения этой проблемы существует специальный модификатор protected
+
+
+	// Перезапись методов родителя в классе потомке
+	//  в PHP в классе-потомке разрешено сделать метод с таким же именем, как и у родителя, таким образом переопределив этот метод родителя на свой.
+	// Перезаписываем метод родителя:
+	public function setAge($age)
+	{
+		if ($age >= 18 and $age <= 25) {
+			$this->age = $age;
+		}
+	}
+	// Так как наш метод setAge использует свойство age от родителя, то в родителе это свойство надо объявить как защищенное
+
+	// Давайте доработаем наш класс Student так, чтобы использовался метод setAge родителя:
+	class Student extends User
+	{
+		private $course;
+		
+		public function setAge($age)
+		{
+			// Если возраст меньше или равен 25:
+			if ($age <= 25) {
+				// Вызываем метод родителя:
+				parent::setAge($age); 
+					// в родителе выполняется проверка age >= 18 
+			}
+		}
+	}
+
+
+
+	// Перезапись конструктора родителя в потомке
+	// Конструктор объекта класса Student:
+	public function __construct($name, $age, $course)
+	{
+		// Вызовем конструктор родителя, передав ему два параметра: 
+		parent::__construct($name, $age);
+			
+		// Запишем свойство course:
+		$this->course = $course;
+	}
+
+
+	// Передача объектов по ссылке
+	$user = new User('john', 30);
+	
+	$test = $user; // и $test, и $user ссылаются на один и тот же объект 
+	$test->name = 'eric'; // поменяли переменную $test - но $user также поменялась!
+	
+	// Проверим - выведем свойство name из переменной $user: 
+	echo $user->name; // выведет 'eric'!
+
+
+
+	$user = new User('john', 30);
+	$name = $user->name; 
+		// запишем в переменную $name текст 'john' 
+	$name = 'eric'; // поменяли переменную $name, но $user->name не поменялось 
+	// Проверим - выведем свойство name из переменной $user: 
+	echo $user->name; // выведет 'john'
+
+	$user = new User('john', 30);
+	$test = $user; // и $test, и $user ссылаются на один и тот же объект 
+	$user = 123;   // теперь $test ссылается, а $user - нет 
+
+	
 ?>
 

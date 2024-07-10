@@ -25,9 +25,24 @@
         }
 
         public function setAge($age){
-            return $this->age = $age;
+            if ($age>= 18){
+                return $this->age = $age;
+            } else {
+                return "False";
+            }
         }
     }
+
+    class Rectangle{
+        public $h;
+        public $b;
+
+        public function getSquare($h, $b){
+            return $h * $b;
+        }
+    }
+
+    $figure_1 = new Rectangle;
 
     $user_1 = new Employee;
         $user_1->salary = 200;
@@ -38,6 +53,11 @@
 
     echo $user_1->getSalary() + $user_2->getSalary();
     echo '<br>';
-    echo $user_1->setAge(21);
+    echo $user_1->setAge(54);
+    echo '<br>';
+    echo $figure_1->getSquare(2,3);
+    echo '<br>';
+
+
     
 ?>

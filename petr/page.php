@@ -21,10 +21,10 @@
         </div>
         <div class="slider">
             <div class="slides">
-                <img src="image1.jpg" alt="Image 1">
-                <img src="image2.jpg" alt="Image 2">
-                <img src="image3.jpg" alt="Image 3">
-                <img src="image4.jpg" alt="Image 4">
+                <img src="photo.jpg" alt="Image 1">
+                <img src="photo_2.jpg" alt="Image 2">
+                <img src="photo.jpg" alt="Image 3">
+                <img src="photo.jpg" alt="Image 4">
             </div>
             <button class="prev button-sldr">Prev</button>
             <button class="next button-sldr">Next</button>

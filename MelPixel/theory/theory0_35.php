@@ -701,5 +701,449 @@ require_once 'User.php'; // подключаем наш класс
 	$user = 123;   // теперь $test ссылается, а $user - нет 
 
 	
+
+	// Использование классов внутри других классов
+
+	// Передача объектов параметрами
+
+	// Сравнение объектов в ООП на PHP
+// 	При использовании оператора == для сравнения двух объектов выполняется сравнение свойств объектов: два объекта равны, если они имеют одинаковые свойства и их значения (значения свойств сравниваются через ==) и являются экземплярами одного и того же класса.
+
+// При сравнении через ===, переменные, содержащие объекты, считаются равными только тогда, когда они ссылаются на один и тот же экземпляр одного и того же класса.
+$user1 = new User('john', 30);
+$user2 = new User('john', 30);
+
+var_dump($user1 == $user2); // выведет true 
+
+
+$user1 = new User('john', 30); // возраст - число 
+	$user2 = new User('john', '30'); // возраст - строка 
+	var_dump($user1 == $user2); // выведет true
+	
+	
+
+// 	Определение принадлежности объекта к классу
+// Сейчас мы с вами изучим оператор instanceof. Данный оператор используется для определения того, является ли текущий объект экземпляром указанного класса.
+	// Выведет true, тк объект принадлежит классу Class1: 
+	var_dump($obj instanceof Class1);
+	// Выведет false, тк объект НЕ принадлежит классу Class2: 
+	var_dump($obj instanceof Class2);
+
+	class UsersCollection
+	{
+		private $employees = []; // массив работников 
+		private $students = []; // массив студентов 
+	}
+	$usersCollection = new UsersCollection;
+	$usersCollection->add(new Employee('john', 200)); // попадет к работникам 
+	$usersCollection->add(new Student('eric', 100));  // попадет к студентам 
+
+	
+
+	// Контроль типов при работе с объектами
+	// Явно укажем тип параметра:
+	public function add(Employee $employee)
+	{
+		$this->employees[] = $employee;
+	}
+
+
+	// Статические методы в ООП на PHP
+	// При работе с классами можно делать методы, которые для своего вызова не требуют создания объекта. Такие методы называются статическими. Чтобы объявить метод статическим, нужно после модификатора доступа написать ключевое слово static:
+	// Статический метод:
+	class Test
+	{
+		// Статический метод:
+		public static function method()
+		{
+			return '!!!';
+		}
+	}
+	echo Test::method(); // выведет '!!!' 
+
+	// Наш класс Math представляет собой просто набор методов и, фактически, нам нужен только один объект этого класса. В таком случае удобно объявить методы класса статическими и вообще не создавать объект этого класса, а сразу использовать его методы.
+	echo Math::getSum(1, 2) + Math::getProduct(3, 4); 
+
+	// Если вы хотите использовать статические методы внутри класса, то к ним следует обращаться не через $this->, а с помощью self::
+	// Найдем удвоенную сумму:
+	public static function getDoubleSum($a, $b) 
+{
+	return 2 * self::getSum($a, $b); // используем другой метод 
+}
+echo Math::getDoubleSum(1, 2);
+
+// Статические свойства в ООП на PHP
+class Test
+{
+	public static $property; // статическое свойство 
+}
+	Test::$property = 'test';
+	echo Test::$property; // выведет 'test' 
+
+
+	public static function setProperty($value)
+		{
+			self::$property = $value; // записываем данные в наше static свойство 
+		}
+		
+		// Статический метод для получения значения свойства: 
+		public static function getProperty()
+		{
+			return self::$property; 
+				// прочитываем записанные данные 
+		}
+	
+		Test::setProperty('test'); 
+		// запишем данные в свойство 
+	echo Test::getProperty(); // выведем на экран 
+
+
+	private static $pi = 3.14; // вынесем Пи в свойство 
+		public static function getCircleSquare($radius)
+		{
+			return self::$pi * $radius * $radius; 
+		}
+		
+		public static function getCircleСircuit($radius)
+		{
+			return 2 * self::$pi * $radius;
+		}
+
+
+		// Объект со статическими свойствами и методами
+		class Test
+	{
+		public static $staticProperty; 
+			// публичное статическое свойство 
+		public $usualProperty; // обычное свойство 
+	}
+	// А теперь используем статическое свойство, не создавая объект этого класса:
+	Test::$staticProperty = 'static'; // записываем значение 
+	echo Test::$staticProperty; // выведет 'static' 
+
+	// На самом деле, если у нас есть переменная с объектом класса, то у этой переменной также будет доступно статическое свойство:
+	$test = new Test; // создаем объект класса
+	$test::$staticProperty = 'static'; // записываем значение 
+	echo $test::$staticProperty; // выведет 'static' 
+
+	// На практике это означает то, что если у нас есть несколько объектов класса - статические свойства у них будут общие. 
+	$test1 = new Test; // первый объект 
+$test2 = new Test; // второй объект 
+$test1::$staticProperty = 'static'; // запишем значение, используя первый объект
+echo $test1::$staticProperty; // выведет 'static' 
+echo $test2::$staticProperty; // также выведет 'static' 
+
+
+class User
+	{
+		public static $count = 0; // счетчик объектов 
+		public $name;
+		
+		public function __construct($name)
+		{
+			$this->name = $name;
+			
+			// Увеличиваем счетчик при создании объекта: 
+			self::$count++;
+		}
+	}
+
+	$user1 = new User('user1'); // создаем первый объект класса 
+	echo User::$count; //выведет 1
+	
+	$user2 = new User('user2'); // создаем второй объект класса 
+	echo User::$count; //выведет 2
+	
+
+
+	// Константы классов в ООП на PHP
+	class Test
+	{
+		const CONSTANT = 'test';
+		
+		function getConstant() {
+			return self::CONSTANT;
+		}
+	}
+	$test = new Test;
+	echo $test->getConstant(); // выведет 'test' 
+
+
+
+	class foo
+{
+    function name()
+    {
+        echo "Меня зовут " , get_class($this) , "\n";
+    }
+}
+
+	// Создаём объект
+	$bar = new foo();
+
+	// Внешний вызов
+	echo "Его имя " , get_class($bar) , "\n";
+
+	// Внутренний вызов
+	$bar->name();
+
+// 	Его имя foo
+// Меня зовут foo
+
+
+
+
+class myclass
+{
+    // Конструктор
+    function __construct()
+    {
+        return(true);
+    }
+
+    // Метод 1
+    function myfunc1()
+    {
+        return(true);
+    }
+
+    // Метод 2
+    function myfunc2()
+    {
+        return(true);
+    }
+}
+
+
+$class_methods = get_class_methods('myclass');
+// или
+$class_methods = get_class_methods(new myclass());
+
+foreach ($class_methods as $method_name) {
+    echo "$method_name\n";
+}
+
+// Результат выполнения приведённого примера:
+// __construct
+// myfunc1
+// myfunc2
+
+
+
+class myclass
+{
+    var $var1; // У переменной нет начального значения...
+    var $var2 = "xyz";
+    var $var3 = 100;
+    private $var4;
+
+    // Конструктор
+    function __construct()
+    {
+        // Изменим значения отдельных свойств
+        $this->var1 = "foo";
+        $this->var2 = "bar";
+        return true;
+    }
+}
+
+$my_class = new myclass();
+
+$class_vars = get_class_vars(get_class($my_class));
+
+foreach ($class_vars as $name => $value) {
+    echo "$name : $value\n";
+}
+// Результат выполнения приведённого примера:
+// var1 :
+// var2 : xyz
+// var3 : 100
+
+
+// get_object_vars()
+// Возвращает ассоциативный массив нестатических свойств объекта object, доступных в данной области видимости.
+	
+class foo {
+    private $a;
+    public $b = 1;
+    public $c;
+    private $d;
+    static $e;
+
+    public function test() {
+        var_dump(get_object_vars($this));
+    }
+}
+
+$test = new foo;
+var_dump(get_object_vars($test));
+
+$test->test();
+// Результат выполнения приведённого примера:
+
+// array(2) {
+//   ["b"]=>
+//   int(1)
+//   ["c"]=>
+//   NULL
+// }
+// array(4) {
+//   ["a"]=>
+//   NULL
+//   ["b"]=>
+//   int(1)
+//   ["c"]=>
+//   NULL
+//   ["d"]=>
+//   NULL
+
+
+// class_exists
+// Проверяем существование класса прежде чем создать экземпляр объекта
+if (class_exists('MyClass')) {
+    $myclass = new MyClass();
+}
+
+// method_exists — Проверяет, существует ли метод в классе
+// Возвращает true, если метод method определён для указанного объекта object_or_class, иначе false.
+
+// property_exists — Проверяет, есть ли у объекта или класса свойство
+// Функция проверяет, существует ли свойство property в указанном классе.
+
+class myClass {
+    public $mine;
+    private $xpto;
+    static protected $test;
+
+    static function test() {
+        var_dump(property_exists('myClass', 'xpto')); //true
+    }
+}
+var_dump(property_exists('myClass', 'mine'));   // true
+var_dump(property_exists(new myClass, 'mine')); // true
+var_dump(property_exists('myClass', 'xpto'));   // true
+var_dump(property_exists('myClass', 'bar'));    // false
+var_dump(property_exists('myClass', 'test'));   // true
+myClass::test();
+
+
+// get_parent_class — Получает имя родительского класса для объекта или класса
+// Функция получает имя родительского класса для объекта или класса.
+
+
+
+class Dad
+{
+    function __construct()
+    {
+        // Реализация логики
+    }
+}
+
+class Child extends Dad
+{
+    function __construct()
+    {
+        echo "I'm " , get_parent_class($this) , "'s son\n";
+    }
+}
+
+class Child2 extends Dad
+{
+    function __construct()
+    {
+        echo "I'm " , get_parent_class('child2') , "'s son too\n";
+    }
+}
+
+$foo = new child();
+$bar = new child2();
+
+// Результат выполнения приведённого примера:
+// I'm Dad's son
+// I'm Dad's son too
+
+
+// is_subclass_of — Проверяет, принадлежит ли объект к потомкам класса, или реализует ли объект или родители объекта интерфейс
+
+
+// is_a — Проверяет, принадлежит ли объект к типу или подтипу
+// Функция определяет, принадлежит ли объект или класс object_or_class непосредственно к типу объекта class, или тип объекта class — супертип объекта или класса, который проверяют.
+
+// get_declared_classes — Возвращает массив с именами объявленных классов
+
+// Абстрактные классы в ООП на PHP
+// Для этого существуют так называемые абстрактные классы. Абстрактные классы представляют собой классы, предназначенные для наследования от них. При этом объекты таких классов нельзя создать.
+
+abstract class User
+	{
+		private $name;
+		
+		public function getName()
+		{
+			return $this->name;
+		}
+		
+		public function setName($name)
+		{
+			$this->name = $name;
+		}
+	}
+
+	// $user = new User; // выдаст ошибку
+
+	// А вот унаследовать от нашего класса будет можно. Сделаем класс Employee, который будет наследовать от нашего абстрактного класса User:
+	class Employee extends User
+	{
+		private $salary;
+		
+		public function getSalary()
+		{
+			return $this->salary;
+		}
+		
+		public function setSalary($salary)
+		{
+			$this->salary = $salary;
+		}
+		
+	}
+
+	// Создадим объект класса Employee - все будет работать:
+	$employee = new Employee;
+	$employee->setName('john'); 
+		 // метод родителя, 
+		т.е. класса User 
+	$employee->setSalary(1000); 
+		 // свой метод, т.е. класса 
+		Employee 
+	
+	echo $employee->getName();   // выведет 
+		'john' 
+	echo $employee->getSalary(); // выведет 1000
+
+
+
+	class Student extends User
+	{
+		private $scholarship;
+		
+		public function getScholarship()
+		{
+			return $this->scholarship;
+		}
+		
+		public function setScholarship($scholarship)
+		{
+			$this->scholarship = $scholarship;
+		}
+	}
+
+
+	// Абстрактные методы
+	// Абстрактные классы также могут содержать абстрактные методы. Такие методы не должны иметь реализации, а нужны для того, чтобы указать, что такие методы должны быть у потомков. А собственно реализация таких методов - уже задача потомков.
+	
+
+
 ?>
 

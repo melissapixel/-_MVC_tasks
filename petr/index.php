@@ -1,5 +1,34 @@
 <?php
 
+// Код HTML можно записать в метод класса и потом использовать для сайта, вызывая как обычный метод и вставляя в нужное место на сайте.
+// Таким образом, всё PHP приложение можно разсположить в классах, от верстки до бизнес-логики, и безопасно использовать.
+
+class HTMLcode {
+    private $html;
+
+    public function setHTML(){
+        $html = '
+            <div class="header">
+                <div class="width-header">
+                    <div class="logo"><img src="" alt=""></div>
+                    <div class="search-input"><input type="text"><input type="button" value="Искать"></div>
+                    <div class="header-link">О нас</div>
+                    <div class="header-link">Форум</div>
+                    <div class="header-link">Новости</div>
+                    <div class="enter-block">
+                        <div class="enter-link">Войти</div>
+                        <div class="enter-link">Рeгистрация</div>
+                    </div>
+                </div>
+            </div>
+        ';
+
+        return $html;
+    }
+}
+
+$header = new HTMLcode();
+
 // Класс для подключения к БД
 class Database
 {

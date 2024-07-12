@@ -1,5 +1,33 @@
 <?php
 
+// Функция калькулятора
+
+class Colculate {
+    private $num_one;
+    private $num_two;
+
+    public function __construct($one, $two){
+        $this->num_one = $one;
+        $this->num_two = $two;
+    }
+
+    public function setNum($one, $two){
+        $this->num_one = $one;
+        $this->num_two = $two;
+    }
+
+    public function getNum(){
+        return "One: $this->num_one Two: $this->num_two";
+    }
+
+    public function setPlus(){
+        return $this->num_one + $this->num_two;
+    }
+}
+
+$colcul = new Colculate(2, 8);
+echo $colcul->getNum();
+
 // Код HTML можно записать в метод класса и потом использовать для сайта, вызывая как обычный метод и вставляя в нужное место на сайте.
 // Таким образом, всё PHP приложение можно разсположить в классах, от верстки до бизнес-логики, и безопасно использовать.
 
@@ -8,19 +36,26 @@ class HTMLcode {
 
     public function setHTML(){
         $html = '
-            <div class="header">
-                <div class="width-header">
-                    <div class="logo"><img src="" alt=""></div>
-                    <div class="search-input"><input type="text"><input type="button" value="Искать"></div>
-                    <div class="header-link">О нас</div>
-                    <div class="header-link">Форум</div>
-                    <div class="header-link">Новости</div>
-                    <div class="enter-block">
-                        <div class="enter-link">Войти</div>
-                        <div class="enter-link">Рeгистрация</div>
+            <header class="header">
+                <div class="container">
+                    <div class="logo">
+                        <img src="logo.png" alt="Логотип">
+                    </div>
+                    <nav class="nav">
+                        <a href="#" class="nav-link">О нас</a>
+                        <a href="#" class="nav-link">Форум</a>
+                        <a href="#" class="nav-link">Новости</a>
+                    </nav>
+                    <div class="search">
+                        <input type="text" placeholder="Поиск...">
+                        <button type="button">Искать</button>
+                    </div>
+                    <div class="auth">
+                        <a href="#" class="auth-link">Войти</a>
+                        <a href="#" class="auth-link">Регистрация</a>
                     </div>
                 </div>
-            </div>
+            </header>
         ';
 
         return $html;
@@ -128,6 +163,6 @@ class Database
 }
 
 // Использование класса для получения данных
-$database = new Database();
+//$database = new Database();
 
 ?>

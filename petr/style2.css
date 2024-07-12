@@ -1,0 +1,69 @@
+.header {
+    background-color: #8B4513; /* Коричневый цвет фона */
+    padding: 10px 0; /* Внутренний отступ */
+}
+
+.width-header {
+    width: 100%;
+    max-width: 1000px; /* Ширина блока */
+    margin: 0 auto; /* Центрирование блока */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    width: 100px; /* Размер логотипа */
+}
+
+.search-input {
+    display: flex;
+    align-items: center;
+}
+
+.search-input input[type="text"] {
+    padding: 8px;
+    border: 1px solid #654321; /* Темно-коричневый цвет рамки */
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.search-input input[type="button"] {
+    padding: 8px 15px;
+    background-color: #D2B48C; /* Цвет кнопки */
+    color: #fff; /* Белый цвет текста */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.header-link, .enter-link {
+    padding: 8px 22px;
+    color: #fff; /* Белый цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.header-link {
+    font-size: 24px;
+}
+
+.enter-link {
+    background-color: #8B4513; /* Коричневый цвет для ссылок */
+    margin-left: 10px;
+}
+
+#container {
+    width: 300px; /* Ширина контейнера */
+    height: auto; /* Высота контейнера */
+    border: 1px solid #ccc; /* Добавляем рамку для эффекта */
+    padding: 5px; /* Внутренний отступ */
+  }
+  
+  #myTextarea {
+    width: 100%; /* Заполнить всю ширину контейнера */
+    height: 1em; /* Начальная высота */
+    resize: none; /* Запретить изменение размера */
+    overflow: hidden; /* Скрыть прокрутку */
+    border: none; /* Убираем рамку */
+  }

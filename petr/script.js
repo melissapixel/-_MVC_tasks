@@ -21,3 +21,13 @@ nextBtn.addEventListener('click', () => {
         showSlide(slideIndex);
     }
 });
+
+// ==========================
+
+function autoResize() {
+    const textarea = document.getElementById('myTextarea');
+    textarea.style.height = '1px'; // Сбросим высоту перед измерением
+  
+    const scrollHeight = textarea.scrollHeight;
+    textarea.style.height = scrollHeight + 'px';
+  }

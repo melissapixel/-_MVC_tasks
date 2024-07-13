@@ -1,5 +1,24 @@
 <?php
 
+// Наследование
+// Классы наследуют все свойства и методы от родителей, и могут использовать их. Однако уникальные функции нужно прописывать в классе-потомке.
+
+class Dog {
+    protected $name;
+    
+    public function __construct($name){
+        $this->name = $name;
+    }
+}
+
+class Cat extends Dog {
+    public function speak(){
+        return "Кошка по имени $this->name издает странные звуки.";
+    }
+}
+
+$cat = new Cat('Котя');
+echo $cat->speak();
 // Функция калькулятора
 
 class Colculate {

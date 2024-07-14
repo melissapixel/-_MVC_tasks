@@ -1,5 +1,25 @@
 <?php
 
+class SetName {
+    private $name;
+    private $lastname;
+    private $age;
+
+    public function get_from_db($name, $lastname, $age){
+        $this->name = $name;
+        $this->lastname = $lastname;
+        $this->age = $age;
+    }
+
+    public function set_data(){
+        return "Имя: $this->name<br>Фамилия: $this->lastname<br>Возраст: $this->age";
+    }
+}
+
+$set = new SetName();
+$set->get_from_db('Ангелина', 'Позняк', '17');
+echo $set->set_data();
+
 // Наследование
 // Классы наследуют все свойства и методы от родителей, и могут использовать их. Однако уникальные функции нужно прописывать в классе-потомке.
 
@@ -18,7 +38,7 @@ class Cat extends Dog {
 }
 
 $cat = new Cat('Котя');
-echo $cat->speak();
+$cat->speak();
 // Функция калькулятора
 
 class Colculate {
@@ -45,7 +65,6 @@ class Colculate {
 }
 
 $colcul = new Colculate(2, 8);
-echo $colcul->getNum();
 
 // Код HTML можно записать в метод класса и потом использовать для сайта, вызывая как обычный метод и вставляя в нужное место на сайте.
 // Таким образом, всё PHP приложение можно разсположить в классах, от верстки до бизнес-логики, и безопасно использовать.

@@ -1,5 +1,7 @@
 <?php
-    class intSquare{
+    require_once 'Square.php';
+    
+    class intSquare implements Square{
         private $squareValue;
 
         public function setValue($value){
@@ -14,5 +16,5 @@
         }
     }
     $value_1 = new intSquare;
-    echo $value_1->getCalculateSquare($value_1->setValue(4));
+    echo $value_1->getCalculateSquare($value_1->setValue(90));
 ?>

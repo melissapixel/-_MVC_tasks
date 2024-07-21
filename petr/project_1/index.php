@@ -1,3 +1,8 @@
+<?php
+    include 'db.php';
+    include 'get_posts.php';
+?>
+
 <!DOCTYPE html>
 <html lang="ru"> <!-- Установите язык страницы -->
 <head>
@@ -20,8 +25,7 @@
     </header>
 
     <div class="post__block">
-        <div class="post__block-head">Заголовок поста</div>
-        <div class="post__block-post">Текст внутри поста</div>
+        <?= $data->getData(); ?>
     </div>
 
 </body>

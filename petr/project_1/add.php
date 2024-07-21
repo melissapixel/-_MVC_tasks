@@ -20,7 +20,7 @@
     </header>
 
     <div class="post__block">
-        <form action="">
+        <form action="post.php" method="POST">
             <div class="post__block-head"><input type="text" name="head" placeholder="Заголовок"></div>
             <div class="post__block-post">
                 <textarea name="text"></textarea>

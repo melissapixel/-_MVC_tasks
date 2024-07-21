@@ -1,0 +1,71 @@
+/* Сброс стилей по умолчанию */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили для body */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Светло-серый фон */
+    color: #333; /* Темно-серый текст */
+}
+
+/* Стили для header */
+header {
+    background: #35424a; /* Темный фон */
+    color: #ffffff; /* Белый текст */
+    padding: 20px 0;
+    text-align: center;
+}
+
+/* Стили для навигации */
+nav ul {
+    list-style: none; /* Убираем маркеры списка */
+    padding: 0;
+}
+
+nav ul li {
+    display: inline; /* Выводим элементы в строку */
+    margin: 0 15px; /* Отступы между элементами */
+}
+
+nav ul li a {
+    color: #ffffff; /* Белый цвет текста ссылок */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
+.post__block {
+    width: 100%;
+}
+
+.post__block-head {
+    width: 600px;
+    min-height: 50px;
+    margin: 10px auto;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.post__block-post {
+    width: 600px;
+    min-height: 300px;
+    margin: 10px auto;
+    border: 1px solid black;
+    padding: 20px 20px;
+}
+
+textarea {
+    width: 560px;
+    height: 300px;
+    resize: none;
+    padding: 10px 10px;
+}

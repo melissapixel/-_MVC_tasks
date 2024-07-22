@@ -1,8 +1,8 @@
 <?php
 
-    include 'db.php';
+    require 'connect_page.php';
 
-    class Post extends Db_connect {
+    class Post extends Connect {
 
         public function __construct($head, $text){
 
@@ -28,6 +28,6 @@
 
     $post = new Post($_POST['head'], $_POST['text']);
 
-    header('Location: index.php');
+    header('Location: ../view/index.php');
 
 ?>

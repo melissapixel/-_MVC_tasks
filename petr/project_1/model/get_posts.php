@@ -1,6 +1,6 @@
 <?php
 
-    Class Get_posts extends Db_connect {
+    Class Get_posts extends Connect {
 
         public function getData(){
 

@@ -1,12 +1,8 @@
 <?php
 
-    class Db_connect {
-        protected $host = 'MySQL-8.2';
-        protected $username = 'root';
-        protected $password = '';
-        protected $database = 'blog_oop';
+    require 'connect_page.php';
 
-        protected $connection;
+    class Db_connect extends Connect {
 
         public function __construct(){
 
